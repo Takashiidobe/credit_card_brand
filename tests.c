@@ -7,7 +7,11 @@ int main()
 {
   luhn_tests();
   mastercard_tests();
+  american_express_tests();
+  diners_tests();
+  jcb_tests();
   visa_tests();
   len_tests();
+  discover_tests();
   get_brand_tests();
 }

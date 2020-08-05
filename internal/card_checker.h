@@ -47,7 +47,11 @@ bool is_diners(const char *cc)
   if (!luhn(cc) || !is_diners_len(cc))
     return false;
 
-  if (starts_with(cc, "36") || starts_with(cc, "38") || starts_with(cc, "39") || starts_with(cc, "3095"))
+  if (
+      starts_with(cc, "36") ||
+      starts_with(cc, "38") ||
+      starts_with(cc, "39") ||
+      starts_with(cc, "3095"))
     return true;
 
   if (in_range(cc, 300, 305))
@@ -75,7 +79,9 @@ bool is_discover(const char *cc)
   if (starts_with(cc, "64") || starts_with(cc, "65") || starts_with(cc, "6011"))
     return true;
 
-  if (in_range(cc, 622126, 622925) || in_range(cc, 624000, 626999) || in_range(cc, 628200, 628899))
+  if (in_range(cc, 622126, 622925) ||
+      in_range(cc, 624000, 626999) ||
+      in_range(cc, 628200, 628899))
     return true;
 
   return false;
