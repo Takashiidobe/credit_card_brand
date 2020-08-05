@@ -5,29 +5,29 @@
 #include <stdint.h>
 #include <string.h>
 
-bool __is_between_digits(const char *cc, uint8_t x, uint8_t y)
+bool is_between_digits(const char *cc, uint8_t x, uint8_t y)
 {
   return strlen(cc) >= x && strlen(cc) <= y ? true : false;
 }
 
-bool __is_n_digits(const char *cc, uint8_t n)
+bool is_n_digits(const char *cc, uint8_t n)
 {
   return strlen(cc) == n ? true : false;
 }
 
 bool is_visa_len(const char *cc)
 {
-  return __is_n_digits(cc, 16);
+  return is_n_digits(cc, 16);
 }
 
 bool is_mastercard_len(const char *cc)
 {
-  return __is_n_digits(cc, 16);
+  return is_n_digits(cc, 16);
 }
 
 bool is_american_express_len(const char *cc)
 {
-  return __is_n_digits(cc, 15);
+  return is_n_digits(cc, 15);
 }
 
 bool is_diners_len(const char *cc)
@@ -36,10 +36,10 @@ bool is_diners_len(const char *cc)
   if (cc[0] == '3' && cc[1] == '6')
     is_36 = true;
 
-  if (is_36 && __is_between_digits(cc, 14, 19))
+  if (is_36 && is_between_digits(cc, 14, 19))
     return true;
 
-  if (!is_36 && __is_between_digits(cc, 16, 19))
+  if (!is_36 && is_between_digits(cc, 16, 19))
     return true;
 
   return false;
@@ -47,12 +47,12 @@ bool is_diners_len(const char *cc)
 
 bool is_jcb_len(const char *cc)
 {
-  return __is_between_digits(cc, 16, 19);
+  return is_between_digits(cc, 16, 19);
 }
 
 bool is_discover_len(const char *cc)
 {
-  return __is_between_digits(cc, 16, 19);
+  return is_between_digits(cc, 16, 19);
 }
 
 #endif
