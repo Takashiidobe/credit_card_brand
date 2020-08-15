@@ -18,5 +18,7 @@ The get card brand function will disregard all characters that aren't numeric in
 ## Makefile
 
 `make all` and `make test` run the tests for this project.
+
 `make release` creates a release header file called `distribute.h` for distribution. This uses quom, which requires python3 and can be installed with pip with `pip3 install quom`.
+
 `make docs` creates the docs, which are under construction.
