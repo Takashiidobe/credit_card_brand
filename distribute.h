@@ -17,84 +17,6 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <string.h>
-
-bool is_between_digits(const char *cc, uint8_t x, uint8_t y)
-{
-  return strlen(cc) >= x && strlen(cc) <= y ? true : false;
-}
-
-bool is_n_digits(const char *cc, uint8_t n)
-{
-  return strlen(cc) == n ? true : false;
-}
-
-bool is_visa_len(const char *cc)
-{
-  return is_n_digits(cc, 16);
-}
-
-bool is_mastercard_len(const char *cc)
-{
-  return is_n_digits(cc, 16);
-}
-
-bool is_american_express_len(const char *cc)
-{
-  return is_n_digits(cc, 15);
-}
-
-bool is_diners_len(const char *cc)
-{
-  bool is_36 = false;
-  if (cc[0] == '3' && cc[1] == '6')
-    is_36 = true;
-
-  if (is_36 && is_between_digits(cc, 14, 19))
-    return true;
-
-  if (!is_36 && is_between_digits(cc, 16, 19))
-    return true;
-
-  return false;
-}
-
-bool is_jcb_len(const char *cc)
-{
-  return is_between_digits(cc, 16, 19);
-}
-
-bool is_discover_len(const char *cc)
-{
-  return is_between_digits(cc, 16, 19);
-}
-
-#endif
-
-#ifndef __LUNH_H__
-#define __LUNH_H__
-
-#include <stdbool.h>
-#include <stdint.h>
-#include <string.h>
-
-bool luhn(const char *cc)
-{
-  const int32_t m[] = {0, 2, 4, 6, 8, 1, 3, 5, 7, 9};
-  int32_t i;
-  int32_t odd = 1;
-  int32_t sum = 0;
-
-  for (i = strlen(cc); i--; odd = !odd)
-  {
-    int32_t digit = cc[i] - '0';
-    sum += odd ? digit : m[digit];
-  }
-
-  return sum % 10 == 0;
-}
-
-#endif
-
 #ifndef __CARD_UTILS_H__
 #define __CARD_UTILS_H__
 
@@ -151,6 +73,83 @@ bool starts_with(const char *str, const char *cmp)
   }
 
   return true;
+}
+
+#endif
+
+bool is_between_digits(const char *cc, uint8_t x, uint8_t y)
+{
+  return strlen(cc) >= x && strlen(cc) <= y ? true : false;
+}
+
+bool is_n_digits(const char *cc, uint8_t n)
+{
+  return strlen(cc) == n ? true : false;
+}
+
+bool is_visa_len(const char *cc)
+{
+  return is_n_digits(cc, 16);
+}
+
+bool is_mastercard_len(const char *cc)
+{
+  return is_n_digits(cc, 16);
+}
+
+bool is_american_express_len(const char *cc)
+{
+  return is_n_digits(cc, 15);
+}
+
+bool is_diners_len(const char *cc)
+{
+  bool is_36 = false;
+  if (starts_with(cc, "36"))
+    is_36 = true;
+
+  if (is_36 && is_between_digits(cc, 14, 19))
+    return true;
+
+  if (!is_36 && is_between_digits(cc, 16, 19))
+    return true;
+
+  return false;
+}
+
+bool is_jcb_len(const char *cc)
+{
+  return is_between_digits(cc, 16, 19);
+}
+
+bool is_discover_len(const char *cc)
+{
+  return is_between_digits(cc, 16, 19);
+}
+
+#endif
+
+#ifndef __LUNH_H__
+#define __LUNH_H__
+
+#include <stdbool.h>
+#include <stdint.h>
+#include <string.h>
+
+bool luhn(const char *cc)
+{
+  const int32_t m[] = {0, 2, 4, 6, 8, 1, 3, 5, 7, 9};
+  int32_t i;
+  int32_t odd = 1;
+  int32_t sum = 0;
+
+  for (i = strlen(cc); i--; odd = !odd)
+  {
+    int32_t digit = cc[i] - '0';
+    sum += odd ? digit : m[digit];
+  }
+
+  return sum % 10 == 0;
 }
 
 #endif

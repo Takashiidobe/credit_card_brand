@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <string.h>
+#include "card_utils.h"
 
 bool is_between_digits(const char *cc, uint8_t x, uint8_t y)
 {
@@ -33,7 +34,7 @@ bool is_american_express_len(const char *cc)
 bool is_diners_len(const char *cc)
 {
   bool is_36 = false;
-  if (cc[0] == '3' && cc[1] == '6')
+  if (starts_with(cc, "36"))
     is_36 = true;
 
   if (is_36 && is_between_digits(cc, 14, 19))
